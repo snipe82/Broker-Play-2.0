@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Broker Play 2.0</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+    <img src="logo.png" alt="Logo de Broker Play"> <!-- Cambia logo.png por la ruta de tu logo -->
+    <h1 class="header-title">Broker Play 2.0 - Tu administrador integral de seguros</h1>
+    <div class="points-account">
+        <strong id="current-date"></strong>  <!-- Aquí se mostrará la fecha actual -->
+        <div class="user-info">
+            <span id="logged-in-user"></span> <!-- Nombre de usuario -->
+        </div>
+    </div>
+</header>
+<div id="content"class="container" >
+	
+         <div class="login-form">
+            <h2>Iniciar Sesión</h2>
+            <label for="username">Usuario:</label>
+            <input type="text" id="username" placeholder="Ingrese su usuario">
+            <label for="password">Contraseña:</label>
+            <input type="password" id="password" placeholder="Ingrese su contraseña">
+            <button onclick="login()">Entrar</button>
+            <div class="loading" id="loading" style="display: none;">
+                <div class="loader"></div>
+            </div>
+        </div>
+    </div>
+	<!-- Menú que se muestra después de iniciar sesión -->
+    <nav id="menu" style="display: none;">
+        <ul>
+            <li><a href="#" onclick="loadPage('dashboard')">Panel de Control</a></li>
+            <li><a href="#" onclick="loadPage('searchPanel')">Buscar</a></li>
+            <li><a href="#" onclick="loadPage('goalsPanel')">Mis metas</a></li>
+            <li><a href="#" onclick="loadPage('PostVenta')">Post Venta</a></li> 
+            <li><a href="#" onclick="loadPage('comparisonPanel')">Cotizaciones</a></li>
+            <li><a href="#" onclick="loadPage('bigData')">Big Data</a></li>
+        </ul>
+    </nav>
+    <div id="dashboard" class="container" style="display: none;">
+        <h2>Panel de Control</h2>
+        
+        <!-- Bandeja de Avisos -->
+        <div class="notification-tray">
+            <h3>Avisos Importantes</h3>
+            <div class="notification">
+                <strong>Nuevo reclamo registrado:</strong> ID 003 - Cliente: Luis Fernández
+            </div>
+            <div class="notification alert">
+                <strong>Alerta:</strong> Consulta C002 tiene más de 48 horas sin respuesta.
+            </div>
+            <div class="notification">
+                <strong>Solicitud de póliza aprobada:</strong> ID 1003 - Cliente: Teresa Ruiz
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>Tus seguros más vendidos</h3>
+            <div class="grid">
+                <div class="grid-item"><strong>Seguro Salud 104:</strong>Aseguradora AAA</div>
+                <div class="grid-item"><strong>Seguro Vida 027:</strong>Aseguradora BBB</div>
+                <div class="grid-item"><strong>Seguro Mascotas 005:</strong>Aseguradora ZZZ</div>
+                <div class="grid-item"><strong>Microseguro 089:</strong>Aseguradora XXX</div>
+            </div>
+            <div class="grid">
+                <div class="grid-item"><strong>Seguro Laptop 006:</strong>Aseguradora CCC</div>
+                <div class="grid-item"><strong>Seguro Salud 185:</strong>Aseguradora FFF</div>
+                <div class="grid-item"><strong>Seguro Fiestas 022:</strong>Aseguradora III</div>
+                <div class="grid-item"><strong>Seguro Vida 253:</strong> Aseguradora HHH</div>
+            </div>
+        </div>
+        <div class="section">
+            <h3>Solicitudes de Póliza</h3>
+            <div class="grid">
+                <div class="grid-item"><strong>ID Solicitud:</strong> 1001</div>
+                <div class="grid-item"><strong>Cliente:</strong> Carlos Gómez</div>
+                <div class="grid-item"><strong>Fecha:</strong> 29/09/2024</div>
+                <div class="grid-item"><strong>Estado:</strong> Pendiente</div>
+            </div>
+            <div class="grid">
+                <div class="grid-item"><strong>ID Solicitud:</strong> 1002</div>
+                <div class="grid-item"><strong>Cliente:</strong> Ana Torres</div>
+                <div class="grid-item"><strong>Fecha:</strong> 30/09/2024</div>
+                <div class="grid-item"><strong>Estado:</strong> Aprobada</div>
+            </div>
+        </div>
+        <div class="section">
+            <h3>Usuarios Conectados</h3>
+            <div class="grid">
+                <div class="grid-item"><strong>ID Usuario:</strong> U001</div>
+                <div class="grid-item"><strong>Nombre:</strong> Laura Martínez</div>
+                <div class="grid-item"><strong>Email:</strong> laura@example.com</div>
+                <div class="grid-item"><strong>Última Conexión:</strong> 01/10/2024 09:15</div>
+            </div>
+            <div class="grid">
+                <div class="grid-item"><strong>ID Usuario:</strong> U002</div>
+                <div class="grid-item"><strong>Nombre:</strong> Pedro Ríos</div>
+                <div class="grid-item"><strong>Email:</strong> pedro@example.com</div>
+                <div class="grid-item"><strong>Última Conexión:</strong> 30/09/2024 17:20</div>
+            </div>
+        </div>
+        <div class="section">
+            <h3>Consultas</h3>
+            <div class="grid">
+                <div class="grid-item alert"><strong>ID Consulta:</strong> C001</div>
+                <div class="grid-item alert"><strong>Cliente:</strong> Sofía Martínez</div>
+                <div class="grid-item alert"><strong>Consulta:</strong> Información sobre pólizas</div>
+                <div class="grid-item alert"><strong>Estado:</strong> Resuelto</div>
+            </div>
+            <div class="grid">
+                <div class="grid-item"><strong>ID Consulta:</strong> C002</div>
+                <div class="grid-item"><strong>Cliente:</strong> Andrés García</div>
+                <div class="grid-item"><strong>Consulta:</strong> Dudas sobre reclamos</div>
+                <div class="grid-item"><strong>Estado:</strong> En Proceso</div>
+            </div>
+        </div>
+        <button id="bussiness-intelligence" class="card">Abrir Panel de Business Inteligente</button>
+    </div>
+	<div id="searchPanel" style="display: none;">
+    <div class="search-form">
+        <label for="searchInput">Buscar persona:</label>
+        <input type="text" id="searchInput" placeholder="Ingrese el nombre o ID">
+        <button onclick="searchPerson()">
+            <img src="lupa.png" alt="Buscar"> <!-- Cambia 'lupa.png' por la ruta de tu imagen de lupa -->
+        </button>
+    </div>
+	<!-- Panel donde se mostrarán los resultados -->
+	<div id="resultsPanel" class="client-info-panel" style="display: none;">
+		<h2 class="client-info-title">Información del Cliente</h2>
+		
+		<div class="client-details">
+			<div class="client-info">
+				<p><strong>Nombre:</strong> <span id="clientName"></span></p>
+				<p><strong>Apellido:</strong> <span id="clientLastName"></span></p>
+				<p><strong>Edad:</strong> <span id="clientAge"></span></p>
+				<p><strong>Ocupación:</strong> <span id="clientOccupation"></span></p>
+				<p><strong>Móvil:</strong> <span id="clientMobile"></span></p>
+				<p><strong>Correo:</strong> <span id="clientMail"></span></p>
+				<p><strong>País:</strong> <span id="clientCountry"></span></p>
+			</div>
+
+			<div class="client-info policies">
+				<h3 class="client-info-subtitle">Pólizas Contratadas</h3>
+				<ul id="policiesList" class="policies-list"></ul>
+			</div>
+		</div>
+
+		<div class="payment-section">
+			<div class="status-and-button">
+				<p id="paymentStatus" class="payment-status">Al día</p>
+				<!-- Botón para enviar estado de cuenta -->
+			   <button id="sendStatementBtn" onclick="enviarEstadoCuenta()" class="send-button">Enviar Estado de Cuenta</button>
+			</div>
+		</div>
+	</div>
+
+	</div>
+	<!-- Panel donde se mostrarán las metas -->
+	<div id="goalsPanel" style="display: none;">
+		<h2>Mis Metas</h2>
+		<div class="goal personal-goal">
+			<h3>Meta Personal</h3>
+			<p>Has vendido: <strong>5 pólizas</strong></p>
+			<p>Meta del mes: <strong>10 pólizas</strong></p>
+			<p>Te faltan: <strong>5 pólizas</strong> para alcanzar tu meta.</p>
+		</div>
+		<div class="goal team-goal">
+			<h3>Meta del Equipo</h3>
+			<p>Meta del equipo: <strong>50 pólizas</strong></p>
+			<p>Pólizas vendidas hasta ahora: <strong>30 pólizas</strong></p>
+			<p>Estado: <strong>En curso</strong></p>
+		</div>
+	</div>
+	<!-- Panel donde se mostrarán las gestiones de post venta -->
+	<div id="PostVenta" class="container" style="display: none;">
+		<h2>Panel de Control de Post Venta</h2>
+
+		<!-- Reclamos -->
+		<div class="section">
+			<h3>Reclamos</h3>
+			<div class="grid">
+				<div class="grid-item"><strong>ID Reclamo:</strong> 001</div>
+				<div class="grid-item"><strong>Cliente:</strong> Juan Pérez</div>
+				<div class="grid-item"><strong>Fecha:</strong> 01/10/2024</div>
+				<div class="grid-item"><strong>Estado:</strong> En Proceso</div>
+			</div>
+			<div class="grid">
+				<div class="grid-item"><strong>ID Reclamo:</strong> 002</div>
+				<div class="grid-item"><strong>Cliente:</strong> María López</div>
+				<div class="grid-item"><strong>Fecha:</strong> 28/09/2024</div>
+				<div class="grid-item"><strong>Estado:</strong> Resuelto</div>
+			</div>
+		</div>
+
+		<!-- Consultas -->
+		<div class="section">
+			<h3>Consultas</h3>
+			<div class="grid">
+				<div class="grid-item"><strong>ID Consulta:</strong> 101</div>
+				<div class="grid-item"><strong>Cliente:</strong> Carlos Ramírez</div>
+				<div class="grid-item"><strong>Fecha:</strong> 30/09/2024</div>
+				<div class="grid-item"><strong>Estado:</strong> Pendiente de Respuesta</div>
+			</div>
+			<div class="grid">
+				<div class="grid-item"><strong>ID Consulta:</strong> 102</div>
+				<div class="grid-item"><strong>Cliente:</strong> Laura Gutiérrez</div>
+				<div class="grid-item"><strong>Fecha:</strong> 25/09/2024</div>
+				<div class="grid-item"><strong>Estado:</strong> Respondida</div>
+			</div>
+		</div>
+
+		<!-- Solicitudes de Información -->
+		<div class="section">
+			<h3>Solicitudes de Información</h3>
+			<div class="grid">
+				<div class="grid-item"><strong>ID Solicitud:</strong> 201</div>
+				<div class="grid-item"><strong>Cliente:</strong> Pedro Fernández</div>
+				<div class="grid-item"><strong>Fecha:</strong> 02/10/2024</div>
+				<div class="grid-item"><strong>Estado:</strong> En Revisión</div>
+			</div>
+			<div class="grid">
+				<div class="grid-item"><strong>ID Solicitud:</strong> 202</div>
+				<div class="grid-item"><strong>Cliente:</strong> Rosa García</div>
+				<div class="grid-item"><strong>Fecha:</strong> 29/09/2024</div>
+				<div class="grid-item"><strong>Estado:</strong> Resuelta</div>
+			</div>
+		</div>
+
+		<!-- Otras Gestiones -->
+		<div class="section">
+			<h3>Otras Gestiones</h3>
+			<div class="grid">
+				<div class="grid-item"><strong>ID Gestión:</strong> 301</div>
+				<div class="grid-item"><strong>Cliente:</strong> Lucía Gómez</div>
+				<div class="grid-item"><strong>Fecha:</strong> 28/09/2024</div>
+				<div class="grid-item"><strong>Tipo:</strong> Actualización de Datos</div>
+				<div class="grid-item"><strong>Estado:</strong> Completada</div>
+			</div>
+			<div class="grid">
+				<div class="grid-item"><strong>ID Gestión:</strong> 302</div>
+				<div class="grid-item"><strong>Cliente:</strong> Manuel Martínez</div>
+				<div class="grid-item"><strong>Fecha:</strong> 27/09/2024</div>
+				<div class="grid-item"><strong>Tipo:</strong> Cancelación de Póliza</div>
+				<div class="grid-item"><strong>Estado:</strong> En Proceso</div>
+			</div>
+		</div>
+	</div>
+	<!-- Panel para comparar pólizas -->
+	<div id="comparisonPanel" class="comparison-panel" style="display: none;">
+		<h2 class="comparison-title">Comparar Pólizas</h2>
+		<!-- Barra de progreso -->
+		<div class="progress-bar">		
+			<div id="progressIndicator" class="progress-indicator" style="width: 33%;"></div>
+		</div>
+
+		<!-- Sección 1: Ingreso de documento de cliente -->
+		<div class="comparison-section" id="section1">
+			<h3 class="section-title">Paso 1: Ingresar Documento del Cliente</h3>
+			<input type="text" id="clientDocument" placeholder="Ingrese documento del cliente" class="input-field">
+			<button id="fetchPoliciesBtn" class="fetch-policies-button">Buscar Pólizas</button>
+		</div>
+
+		<!-- Sección 2: Selección de pólizas -->
+		<div class="comparison-section" id="section2" style="display: none;">
+			<h3 class="section-title">Paso 2: Seleccionar Pólizas para Comparar</h3>
+			<p class="info-message">Estos son los mejores seguros según el perfil del cliente:</p>
+
+			<!-- Tabla de pólizas -->
+			<table class="policies-table">
+				<thead>
+					<tr>
+						<th>Seleccionar</th>
+						<th>Tipo de Seguro</th>
+						<th>Aseguradora</th>
+						<th>Coberturas</th>
+						<th>Pago Mensual</th>
+					</tr>
+				</thead>
+				<tbody id="policiesComparisonList">
+					<!-- Ejemplo de pólizas -->
+					<tr>
+						<td><input type="checkbox" class="policy-checkbox" data-policy="Vida Asegurada 1"></td>
+						<td>Vida</td>
+						<td>Aseguradora 1</td>
+						<td>Cobertura completa, accidentes</td>
+						<td>$50</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox" class="policy-checkbox" data-policy="Vida Asegurada 2"></td>
+						<td>Vida</td>
+						<td>Aseguradora 2</td>
+						<td>Cobertura parcial, enfermedades graves</td>
+						<td>$60</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox" class="policy-checkbox" data-policy="Salud Asegurada 1"></td>
+						<td>Salud</td>
+						<td>Aseguradora 3</td>
+						<td>Hospitalización, medicamentos</td>
+						<td>$40</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox" class="policy-checkbox" data-policy="Salud Asegurada 2"></td>
+						<td>Salud</td>
+						<td>Aseguradora 3</td>
+						<td>Consultas, exámenes</td>
+						<td>$45</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox" class="policy-checkbox" data-policy="Salud Asegurada 3"></td>
+						<td>Salud</td>
+						<td>Aseguradora 4</td>
+						<td>Hospitalización, cirugías</td>
+						<td>$55</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox" class="policy-checkbox" data-policy="Mascotas Asegurada 1"></td>
+						<td>Mascotas</td>
+						<td>Aseguradora 5</td>
+						<td>Accidentes, enfermedades</td>
+						<td>$30</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox" class="policy-checkbox" data-policy="Mascotas Asegurada 2"></td>
+						<td>Mascotas</td>
+						<td>Aseguradora 6</td>
+						<td>Cuidados, medicamentos</td>
+						<td>$35</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox" class="policy-checkbox" data-policy="Viaje Asegurado 1"></td>
+						<td>Viajes</td>
+						<td>Aseguradora 7</td>
+						<td>Cancelación, emergencias</td>
+						<td>$25</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox" class="policy-checkbox" data-policy="Carro Asegurado 1"></td>
+						<td>Carro</td>
+						<td>Aseguradora 8</td>
+						<td>Choque, robo</td>
+						<td>$70</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox" class="policy-checkbox" data-policy="Fiestas Asegurada 1"></td>
+						<td>Fiestas</td>
+						<td>Aseguradora 9</td>
+						<td>Cancelaciones, daños</td>
+						<td>$45</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<button id="nextStepBtn" class="next-step-button" disabled>Siguiente</button>
+		</div>
+
+
+		<!-- Sección 3: Enviar cotización -->
+		<div class="comparison-section" id="section3" style="display: none;">
+			<h3 class="section-title">Paso 3: Enviar Cotización</h3>
+			<p id="selectedPoliciesSummary">Resumen de las pólizas seleccionadas:</p>
+			<ul id="selectedPoliciesList"></ul>
+			<button id="sendQuoteBtn" onclick="enviarCotización()" class="send-quote-button" disabled>Enviar Cotización a Cliente</button>
+		</div>
+
+	</div>
+    <!-- Panel donde se mostrará la opción de acceso a Big Data -->
+	<div id="bigData" style="display: none;">
+    <div class="search-form">
+        <label for="searchInput">Accede desde tu excel a nuestro Data Lake</label>
+        <button onclick="generateExcel()">
+            <img src="excel.png" alt="Acceder"> <!-- Cambia 'lupa.png' por la ruta de tu imagen de lupa -->
+        </button>
+    </div>
+	</div>
+	</div>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
